@@ -1,31 +1,15 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections;
-using System.Net;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class PlayerRegistration : MonoBehaviour
+public class NetworkManager
 {
     private string apiUrl = "http://localhost:5054/api/scores";
 
-    void Start()
-    {
-        Score newScore = new Score
-        {
-            TotalScore = 100,
-            HitCount = 20,
-            RemainTime = 15,
-            Date = DateTime.Now,
-            Id = "1",
-            Major = "Computer",
-            Name = "gildong"
-        };
-
-        StartCoroutine(PostPlayer(newScore));
-    }
-
-    IEnumerator PostPlayer(Score newScore)
+    public IEnumerator CoPostPlayer(Score newScore)
     {
         string jsonData = JsonConvert.SerializeObject(newScore);
         Debug.Log("JSON Data: " + jsonData);
@@ -63,4 +47,3 @@ public class Score
     public string Major { get; set; }
     public string Name { get; set; }
 }
-

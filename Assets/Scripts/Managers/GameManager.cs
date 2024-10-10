@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -36,6 +37,8 @@ public class GameManager
         }
     }
 
+    int TotalRedHitCount { get; set; }
+
     int score;
     public int Score
     {
@@ -65,13 +68,21 @@ public class GameManager
             if (timer == value)
                 return;
 
+            if (value <= 0)
+                value = 0;
+
             timer = value;
             int ceilingTimer = (int)Math.Ceiling(timer);
             int minutes = (int)(ceilingTimer / 60);
             int seconds = (int)(ceilingTimer % 60);
-            TimerText.GetComponent<TMP_Text>().text = $"Timer : {minutes}:{seconds}";
+            TimerText.GetComponent<TMP_Text>().text = $"Timer  {minutes}:{seconds}";
+
+            if (timer <= 0)
+                GameOver();
         }
     }
+
+    public bool isFinish;
 
     int hitCombo;
 
@@ -79,23 +90,29 @@ public class GameManager
     {
         Score = 0;
         hitCombo = 0;
-        Timer = 60;
+        TotalRedHitCount = 0;
+        Timer = 120;
+        isFinish = false;
+    }
+
+    public void EndTurn()
+    {
+        hitCombo = 0;
     }
 
     public void HitRedBall()
     {
         Debug.Log("빨간 공을 맞췄습니다!");
-        hitCombo++;
+        TotalRedHitCount++;
         GetScore();
     }
 
     public void GetScore()
     {
-        Score += hitCombo;
+        Score += hitCombo++;
     }
 
     public void HitYellowBall()
-
     {
         Debug.Log("노란 공을 맞췄습니다..");
         ReduceScore();
@@ -103,20 +120,24 @@ public class GameManager
 
     public void ReduceScore()
     {
-        if(hitCombo == 0)
-        {
-            Score--;
-        }
-        else
-        {
-            Score -= hitCombo;
-        }
-
+        Score = Score / 2;
         hitCombo = 0;
     }
 
     public void GameOver()
     {
+        isFinish = true;
 
+        Score newScore = new Score
+        {
+            TotalScore = Score,
+            HitCount = TotalRedHitCount,
+            Date = DateTime.Now,
+            Id = Managers.Data.Id,
+            Major = Managers.Data.Major,
+            Name = Managers.Data.Name
+        };
+
+        Managers.Instance.StartCoroutine(Managers.Network.CoPostPlayer(newScore));
     }
 }

@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class MyBall : Ball
 {
-    public Vector3 myVelocity;
-    bool isDragging;
+    [SerializeField] bool isDragging;
+    [SerializeField] bool isMoving;
+
+    Vector3 dragStartPos;
+    Vector3 dragEndPos;
+
     public LayerMask myBallLayer;
     public LayerMask groundLayer;
-    public Vector3 dragStartPos;
-    public Vector3 dragEndPos;
-
+    
+    public Vector3 velocity;
 
     protected override void Start()
     {
@@ -23,20 +26,22 @@ public class MyBall : Ball
     {
         base.Update();
         Managers.Game.Timer -= Time.deltaTime;
-        myVelocity = rb.velocity;
+
+        if (isMoving)
+            return;
 
         // 마우스 클릭 시 레이를 발사하여 흰 공 감지
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Debug.DrawRay(ray.origin, ray.direction * 100, Color.red, 2f);
+
             RaycastHit hit;
 
-            //흰 공인지 확인
+            // 흰 공인지 확인
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, myBallLayer))
             {
-                dragStartPos = hit.point;
-                dragStartPos.y = 1f;
-
+                dragStartPos = transform.position;
                 isDragging = true;
             }
         }
@@ -45,6 +50,8 @@ public class MyBall : Ball
         if (isDragging)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Debug.DrawRay(ray.origin, ray.direction * 100, Color.green, 2f);
+
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, groundLayer))
@@ -61,18 +68,40 @@ public class MyBall : Ball
 
             if (rb != null)
             {
-                // dragStartPos로부터 dragEndPos까지의 벡터 계산
                 Vector3 dragDirection = dragEndPos - dragStartPos;
 
-                // 반대 방향으로 힘을 가하기 위해 벡터를 반전
+                //발사 방향 설정(드래그 반대 방향)
                 Vector3 forceDirection = -dragDirection.normalized;
 
-                // 거리 비례하여 힘 크기 설정 (거리 * 힘 계수)
-                float forceMagnitude = Mathf.Clamp(dragDirection.magnitude * 10f, 0.1f, 50);
+                //발사 힘 설정(드래그 길이 비례)
+                float forceMagnitude = Mathf.Clamp(dragDirection.magnitude * 5f, 0.1f, 50);
 
-                // myBall에 힘을 가함
                 rb.AddForce(forceDirection * forceMagnitude, ForceMode.Impulse);
             }
+        }
+    }
+
+    protected override void FixedUpdate()
+    {
+        base.FixedUpdate();
+
+        //공이 매우 느리면 바로 멈추기
+        if (rb.velocity.magnitude < 0.05f)
+        {
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+            isMoving = false;
+            Managers.Game.EndTurn();
+        }
+        else
+        {
+            isMoving = true;
+        }
+
+        // 디버깅용 velocity 체크
+        if (velocity != rb.velocity)
+        {
+            velocity = rb.velocity;
         }
     }
 

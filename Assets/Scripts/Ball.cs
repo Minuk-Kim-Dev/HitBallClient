@@ -13,6 +13,12 @@ public class Ball : MonoBehaviour
 
     protected virtual void Update()
     {
+        if (Managers.Game.isFinish)
+            return;
+    }
+
+    protected virtual void FixedUpdate()
+    {
 
     }
 }

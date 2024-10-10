@@ -11,17 +11,13 @@ public class Managers : MonoBehaviour
     static Managers _instance;
     public static Managers Instance { get { Init(); return _instance; } }
 
-    #region Contents
-
     static GameManager _game = new GameManager();
+    static NetworkManager _network = new NetworkManager();
+    static DataManager _data = new DataManager();
 
     public static GameManager Game { get { return _game; } }
-
-    #endregion
-
-    #region Core
-
-    #endregion
+    public static NetworkManager Network { get { return _network; } }
+    public static DataManager Data { get { return _data; } }
 
     void Start()
     {
