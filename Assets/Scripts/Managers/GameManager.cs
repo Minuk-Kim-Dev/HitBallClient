@@ -65,9 +65,6 @@ public class GameManager
         }
         set 
         {
-            if (isStart == false)
-                return;
-
             if (timer == value)
                 return;
 
@@ -86,9 +83,10 @@ public class GameManager
     }
 
     public bool isFinish;
-    bool isStart;
+    public bool isStart;
     int hitCombo;
 
+    GameObject gameStartButton;
     public List<GameObject> balls = new List<GameObject>();
 
     public void Init()
@@ -101,6 +99,12 @@ public class GameManager
         isStart = false;
 
         //TODO : 게임시작 버튼 없으면 게임시작 버튼 생성
+        if (gameStartButton == null)
+        {
+            GameObject button = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/GameStartButton"));
+            button.transform.SetParent(GameObject.Find("Canvas").transform, false);
+            gameStartButton = button;
+        }
 
         //공 랜덤 배치?
     }
@@ -109,6 +113,7 @@ public class GameManager
     {
         Init();
         isStart = true;
+        gameStartButton = null;
     }
 
     public void EndTurn()
@@ -154,6 +159,6 @@ public class GameManager
             Name = Managers.Data.Name
         };
 
-        Managers.Instance.StartCoroutine(Managers.Network.CoPostPlayer(newScore));
+        Managers.Instance.StartCoroutine(Managers.Network.CoPostScore(newScore));
     }
 }

@@ -14,10 +14,12 @@ public class Managers : MonoBehaviour
     static GameManager _game = new GameManager();
     static NetworkManager _network = new NetworkManager();
     static DataManager _data = new DataManager();
+    static SoundManager _sound = new SoundManager();
 
     public static GameManager Game { get { return _game; } }
     public static NetworkManager Network { get { return _network; } }
     public static DataManager Data { get { return _data; } }
+    public static SoundManager Sound { get { return _sound; } }
 
     void Start()
     {
@@ -42,6 +44,9 @@ public class Managers : MonoBehaviour
 
             DontDestroyOnLoad(go);
             _instance = go.GetComponent<Managers>();
+
+            _sound.Init();
+            _data.Init();
         }
     }
 

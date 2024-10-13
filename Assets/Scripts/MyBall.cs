@@ -20,7 +20,6 @@ public class MyBall : Ball
     protected override void Start()
     {
         base.Start();
-        Managers.Game.Init();
         isDragging = false;
         direction.SetActive(false);
     }
@@ -28,7 +27,11 @@ public class MyBall : Ball
     protected override void Update()
     {
         base.Update();
-        Managers.Game.Timer -= Time.deltaTime;
+
+        if(Managers.Game.isStart)
+        {
+            Managers.Game.Timer -= Time.deltaTime;
+        }
 
         if (isMoving)
             return;
@@ -44,6 +47,9 @@ public class MyBall : Ball
             // 흰 공인지 확인
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, myBallLayer))
             {
+                if (hit.collider.gameObject.tag != "MainBall")
+                    return;
+
                 dragStartPos = transform.position;
                 isDragging = true;
             }
@@ -119,11 +125,13 @@ public class MyBall : Ball
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    protected override void OnCollisionEnter(Collision collision)
     {
-        string targetLayer = LayerMask.LayerToName(collision.gameObject.layer);
+        base.OnCollisionEnter(collision);
 
-        switch (targetLayer)
+        string targetTag = collision.gameObject.tag;
+
+        switch (targetTag)
         {
             case "RedBall":
                 Managers.Game.HitRedBall();
@@ -131,6 +139,8 @@ public class MyBall : Ball
             case "YellowBall":
                 Managers.Game.HitYellowBall();
                 break;
+            default:
+                return;
         }
     }
 }

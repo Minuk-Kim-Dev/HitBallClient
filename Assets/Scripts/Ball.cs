@@ -23,4 +23,18 @@ public class Ball : MonoBehaviour
     {
 
     }
+
+    protected virtual void OnCollisionEnter(Collision collision)
+    {
+        string targetLayer = LayerMask.LayerToName(collision.gameObject.layer);
+
+        switch (targetLayer)
+        {
+            case "Ball":
+                Managers.Sound.Play("Sounds/ButtonClick");
+                break;
+            default:
+                return;
+        }
+    }
 }

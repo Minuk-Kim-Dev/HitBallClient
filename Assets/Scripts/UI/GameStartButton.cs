@@ -7,5 +7,7 @@ public class GameStartButton : BaseButton
     public override void OnClicked()
     {
         base.OnClicked();
+        Managers.Game.GameStart();
+        Destroy(gameObject);
     }
 }

@@ -12,6 +12,6 @@ public class BaseButton : MonoBehaviour
 
     public virtual void OnClicked()
     {
-        //TODO : 버튼 클릭 사운드 발생
+        Managers.Sound.Play("Sounds/ButtonClick");
     }
 }

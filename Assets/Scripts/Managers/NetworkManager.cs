@@ -9,7 +9,7 @@ public class NetworkManager
 {
     private string apiUrl = "http://localhost:5054/api/scores";
 
-    public IEnumerator CoPostPlayer(Score newScore)
+    public IEnumerator CoPostScore(Score newScore)
     {
         string jsonData = JsonConvert.SerializeObject(newScore);
         Debug.Log("JSON Data: " + jsonData);
