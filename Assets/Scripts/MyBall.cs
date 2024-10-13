@@ -129,6 +129,9 @@ public class MyBall : Ball
     {
         base.OnCollisionEnter(collision);
 
+        if (!Managers.Game.isStart)
+            return;
+
         string targetTag = collision.gameObject.tag;
 
         switch (targetTag)

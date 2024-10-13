@@ -15,11 +15,17 @@ public class Managers : MonoBehaviour
     static NetworkManager _network = new NetworkManager();
     static DataManager _data = new DataManager();
     static SoundManager _sound = new SoundManager();
+    static PoolManager _pool = new PoolManager();
+    static SceneManagerEx _scene = new SceneManagerEx();
+    static ResourceManager _resource = new ResourceManager();
 
     public static GameManager Game { get { return _game; } }
     public static NetworkManager Network { get { return _network; } }
     public static DataManager Data { get { return _data; } }
     public static SoundManager Sound { get { return _sound; } }
+    public static PoolManager Pool { get { return _pool; } }
+    public static SceneManagerEx Scene { get {  return _scene; } }
+    public static ResourceManager Resource { get { return _resource; } }
 
     void Start()
     {
