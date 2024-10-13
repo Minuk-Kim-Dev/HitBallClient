@@ -65,6 +65,9 @@ public class GameManager
         }
         set 
         {
+            if (isStart == false)
+                return;
+
             if (timer == value)
                 return;
 
@@ -83,8 +86,10 @@ public class GameManager
     }
 
     public bool isFinish;
-
+    bool isStart;
     int hitCombo;
+
+    public List<GameObject> balls = new List<GameObject>();
 
     public void Init()
     {
@@ -93,6 +98,17 @@ public class GameManager
         TotalRedHitCount = 0;
         Timer = 120;
         isFinish = false;
+        isStart = false;
+
+        //TODO : 게임시작 버튼 없으면 게임시작 버튼 생성
+
+        //공 랜덤 배치?
+    }
+
+    public void GameStart()
+    {
+        Init();
+        isStart = true;
     }
 
     public void EndTurn()

@@ -12,14 +12,17 @@ public class MyBall : Ball
 
     public LayerMask myBallLayer;
     public LayerMask groundLayer;
-    
+
     public Vector3 velocity;
+
+    [SerializeField] GameObject direction;
 
     protected override void Start()
     {
         base.Start();
         Managers.Game.Init();
         isDragging = false;
+        direction.SetActive(false);
     }
 
     protected override void Update()
@@ -58,6 +61,16 @@ public class MyBall : Ball
             {
                 dragEndPos = hit.point;
                 dragEndPos.y = 1f;
+
+                // 화살표 방향 설정
+                Vector3 dragDirection = dragEndPos - dragStartPos;
+                direction.SetActive(true); // 드래그 시작할 때 화살표 보이기
+                direction.transform.position = transform.position; // 화살표를 공 위치에
+                direction.transform.rotation = Quaternion.LookRotation(-dragDirection); // 드래그 반대 방향으로 회전
+
+                // 화살표 길이(크기)를 드래그 길이에 비례하게 설정
+                float arrowScale = Mathf.Clamp(dragDirection.magnitude, 0.1f, 10f);
+                direction.transform.localScale = new Vector3(1, 1, arrowScale); // Z축 방향으로만 크기 변경
             }
         }
 
@@ -65,15 +78,16 @@ public class MyBall : Ball
         if (Input.GetMouseButtonUp(0) && isDragging)
         {
             isDragging = false;
+            direction.SetActive(false); // 드래그 끝나면 화살표 숨기기
 
             if (rb != null)
             {
                 Vector3 dragDirection = dragEndPos - dragStartPos;
 
-                //발사 방향 설정(드래그 반대 방향)
+                // 발사 방향 설정(드래그 반대 방향)
                 Vector3 forceDirection = -dragDirection.normalized;
 
-                //발사 힘 설정(드래그 길이 비례)
+                // 발사 힘 설정(드래그 길이 비례)
                 float forceMagnitude = Mathf.Clamp(dragDirection.magnitude * 5f, 0.1f, 50);
 
                 rb.AddForce(forceDirection * forceMagnitude, ForceMode.Impulse);
@@ -85,7 +99,7 @@ public class MyBall : Ball
     {
         base.FixedUpdate();
 
-        //공이 매우 느리면 바로 멈추기
+        // 공이 매우 느리면 바로 멈추기
         if (rb.velocity.magnitude < 0.05f)
         {
             rb.velocity = Vector3.zero;
