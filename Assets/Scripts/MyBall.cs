@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MyBall : Ball
 {
     [SerializeField] bool isDragging;
-    [SerializeField] bool isMoving;
 
     Vector3 dragStartPos;
     Vector3 dragEndPos;
@@ -13,13 +13,11 @@ public class MyBall : Ball
     public LayerMask myBallLayer;
     public LayerMask groundLayer;
 
-    public Vector3 velocity;
-
     [SerializeField] GameObject direction;
 
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
         isDragging = false;
         direction.SetActive(false);
     }
@@ -33,7 +31,7 @@ public class MyBall : Ball
             Managers.Game.Timer -= Time.deltaTime;
         }
 
-        if (isMoving)
+        if (!Managers.Game.CheckAllBallStop())
             return;
 
         // 마우스 클릭 시 레이를 발사하여 흰 공 감지
@@ -101,35 +99,19 @@ public class MyBall : Ball
         }
     }
 
-    protected override void FixedUpdate()
-    {
-        base.FixedUpdate();
-
-        // 공이 매우 느리면 바로 멈추기
-        if (rb.velocity.magnitude < 0.05f)
-        {
-            rb.velocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
-            isMoving = false;
-            Managers.Game.EndTurn();
-        }
-        else
-        {
-            isMoving = true;
-        }
-
-        // 디버깅용 velocity 체크
-        if (velocity != rb.velocity)
-        {
-            velocity = rb.velocity;
-        }
-    }
-
     protected override void OnCollisionEnter(Collision collision)
     {
         base.OnCollisionEnter(collision);
 
         if (!Managers.Game.isStart)
+            return;
+
+        Ball ball = collision.gameObject.GetComponent<Ball>();
+
+        if (ball == null)
+            return;
+
+        if (ball.isHit == true)
             return;
 
         string targetTag = collision.gameObject.tag;
@@ -145,5 +127,7 @@ public class MyBall : Ball
             default:
                 return;
         }
+
+        collision.gameObject.GetComponent<Ball>().isHit = true;
     }
 }

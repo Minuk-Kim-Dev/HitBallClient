@@ -19,6 +19,7 @@ public class BaseScene : MonoBehaviour
             Managers.Resource.Instantiate("UI/EventSystem").name = "@EventSystem";
 
         Screen.SetResolution(1920, 1080, false);
+        Managers.UI.Clear();
     }
 
     public virtual void Clear()

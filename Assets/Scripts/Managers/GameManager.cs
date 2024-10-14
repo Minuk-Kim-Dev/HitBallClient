@@ -77,7 +77,7 @@ public class GameManager
             int seconds = (int)(ceilingTimer % 60);
             TimerText.GetComponent<TMP_Text>().text = $"Timer  {minutes}:{seconds}";
 
-            if (timer <= 0)
+            if (timer <= 0 && isFinish == false)
                 GameOver();
         }
     }
@@ -94,31 +94,68 @@ public class GameManager
         Score = 0;
         hitCombo = 0;
         TotalRedHitCount = 0;
-        Timer = 120;
+        Timer = 10;
         isFinish = false;
         isStart = false;
 
         //TODO : 게임시작 버튼 없으면 게임시작 버튼 생성
         if (gameStartButton == null)
         {
-            GameObject button = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/GameStartButton"));
+            GameObject button = Managers.UI.CreateUI("GameStartButton");
             button.transform.SetParent(GameObject.Find("Canvas").transform, false);
             gameStartButton = button;
         }
 
-        //공 랜덤 배치?
+        SetBallsRandom();
     }
 
-    public void GameStart()
+    public void SetBallsRandom()
+    {
+        balls.ForEach(ball => ball.GetComponent<Ball>().SetRandomVelocity());
+    }
+
+    public void SetBallsNoneHit()
+    {
+        balls.ForEach(ball => ball.GetComponent<Ball>().isHit = false);
+    }
+
+    /// <summary>
+    /// 모든 공이 멈추면 true, 아니면 false
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckAllBallStop()
+    {
+        int count = 0;
+
+        balls.ForEach(
+            ball => { 
+                if (ball.GetComponent<Ball>().isMoving == false) 
+                    count++; 
+            });
+
+        if (count == balls.Count)
+            return true;
+        else
+            return false;
+    }
+
+    public IEnumerator GameStart()
     {
         Init();
+
+        yield return new WaitUntil(() => CheckAllBallStop());
+
         isStart = true;
         gameStartButton = null;
     }
 
     public void EndTurn()
     {
-        hitCombo = 0;
+        if (CheckAllBallStop())
+        {
+            hitCombo = 0;
+            SetBallsNoneHit();
+        }
     }
 
     public void HitRedBall()
@@ -160,5 +197,13 @@ public class GameManager
         };
 
         Managers.Instance.StartCoroutine(Managers.Network.CoPostScore(newScore));
+    }
+
+    public void Clear()
+    {
+        scoreText = null;
+        timerText = null;
+        gameStartButton = null;
+        balls.Clear();
     }
 }

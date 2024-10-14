@@ -18,6 +18,7 @@ public class Managers : MonoBehaviour
     static PoolManager _pool = new PoolManager();
     static SceneManagerEx _scene = new SceneManagerEx();
     static ResourceManager _resource = new ResourceManager();
+    static UIManager _ui = new UIManager();
 
     public static GameManager Game { get { return _game; } }
     public static NetworkManager Network { get { return _network; } }
@@ -26,6 +27,7 @@ public class Managers : MonoBehaviour
     public static PoolManager Pool { get { return _pool; } }
     public static SceneManagerEx Scene { get {  return _scene; } }
     public static ResourceManager Resource { get { return _resource; } }
+    public static UIManager UI { get { return _ui; } }
 
     void Start()
     {
