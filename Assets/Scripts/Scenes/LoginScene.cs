@@ -14,5 +14,7 @@ public class LoginScene : BaseScene
 
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+
+        Managers.Sound.Play("bgm", Sound.Bgm);
     }
 }

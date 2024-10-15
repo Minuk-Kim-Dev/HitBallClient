@@ -83,6 +83,30 @@ public class NetworkManager
 
         yield return Managers.Instance.StartCoroutine(rankingPanel.CoUpdateRanking(sortedScores));
     }
+
+    public IEnumerator CoGetGamePlayCount(string id, string major, string name, Action<int> callback)
+    {
+        string url = $"{apiUrl}/playerinfo?id={id}&major={major}&name={name}";
+
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
+        {
+            // 요청 전송
+            yield return webRequest.SendWebRequest();
+
+            // 요청에 실패한 경우
+            if (webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
+            {
+                Debug.LogError($"Error: {webRequest.error}");
+                callback.Invoke(-1);
+            }
+            else
+            {
+                // 요청 성공한 경우 서버에서 반환된 데이터 출력
+                Debug.Log($"Player info count: {webRequest.downloadHandler.text}");
+                callback.Invoke(int.Parse(webRequest.downloadHandler.text));
+            }
+        }
+    }
 }
 
 [System.Serializable]

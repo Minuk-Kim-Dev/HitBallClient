@@ -65,6 +65,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: c5eb278950a019d4f8cb84d478a8f048, type: 2}
+  - {fileID: 2100000, guid: a60ab40f57fe6c7469480a4d5662be63, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -146,13 +147,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68b170c8267a04a4887ca5f0caa46895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDragging: 0
   isMoving: 0
+  isHit: 0
+  isDragging: 0
   myBallLayer:
     serializedVersion: 2
     m_Bits: 512
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
-  velocity: {x: 0, y: 0, z: 0}
   direction: {fileID: 0}

@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 
 public class GameManager
@@ -22,6 +23,21 @@ public class GameManager
         }
     }
 
+    GameObject hitCountText;
+    public GameObject HitCountText
+    {
+        get
+        {
+            if (hitCountText == null)
+                hitCountText = GameObject.Find("HitCountText");
+
+            if (hitCountText == null)
+                Debug.LogError("HitCountText 오브젝트가 없습니다.");
+
+            return hitCountText;
+        }
+    }
+
     GameObject timerText;
     public GameObject TimerText
     {
@@ -37,7 +53,37 @@ public class GameManager
         }
     }
 
-    int TotalRedHitCount { get; set; }
+    GameObject turnText;
+    public GameObject TurnText
+    {
+        get
+        {
+            if (turnText == null)
+                turnText = GameObject.Find("TurnText");
+
+            if (turnText == null)
+                Debug.LogError("TimerText 오브젝트가 없습니다.");
+
+            return turnText;
+        }
+    }
+
+    int totalHitCount;
+    int TotalRedHitCount 
+    {
+        get
+        {
+            return totalHitCount;
+        }
+        set
+        {
+            if (totalHitCount == value)
+                return;
+
+            totalHitCount = value;
+            HitCountText.GetComponent<TMP_Text>().text = $"{totalHitCount}";
+        }
+    }
 
     int score;
     public int Score
@@ -52,7 +98,7 @@ public class GameManager
                 return;
 
             score = value;
-            ScoreText.GetComponent<TMP_Text>().text = $"Score : {score}";
+            ScoreText.GetComponent<TMP_Text>().text = $"{score}";
         }
     }
 
@@ -75,7 +121,7 @@ public class GameManager
             int ceilingTimer = (int)Math.Ceiling(timer);
             int minutes = (int)(ceilingTimer / 60);
             int seconds = (int)(ceilingTimer % 60);
-            TimerText.GetComponent<TMP_Text>().text = $"Timer  {minutes}:{seconds}";
+            TimerText.GetComponent<TMP_Text>().text = $"{minutes}:{seconds}";
 
             if (timer <= 0 && isFinish == false)
                 GameOver();
@@ -84,9 +130,10 @@ public class GameManager
 
     public bool isFinish;
     public bool isStart;
+    public bool isRolling;
     int hitCombo;
 
-    GameObject gameStartButton;
+    GameObject gameStartUI;
     public List<GameObject> balls = new List<GameObject>();
 
     public void Init()
@@ -94,16 +141,15 @@ public class GameManager
         Score = 0;
         hitCombo = 0;
         TotalRedHitCount = 0;
-        Timer = 10;
+        Timer = 120;
         isFinish = false;
         isStart = false;
 
         //TODO : 게임시작 버튼 없으면 게임시작 버튼 생성
-        if (gameStartButton == null)
+        if (gameStartUI == null)
         {
-            GameObject button = Managers.UI.CreateUI("GameStartButton");
-            button.transform.SetParent(GameObject.Find("Canvas").transform, false);
-            gameStartButton = button;
+            GameObject ui = Managers.UI.CreateUI("StartUI");
+            gameStartUI = ui;
         }
 
         SetBallsRandom();
@@ -111,6 +157,7 @@ public class GameManager
 
     public void SetBallsRandom()
     {
+        isRolling = true;
         balls.ForEach(ball => ball.GetComponent<Ball>().SetRandomVelocity());
     }
 
@@ -134,19 +181,34 @@ public class GameManager
             });
 
         if (count == balls.Count)
+        {
+            if (!TurnText.activeSelf)
+                TurnText.SetActive(true);
+            isRolling = false;
             return true;
+        }
         else
+        {
+            if (TurnText.activeSelf)
+                TurnText.SetActive(false);
             return false;
+        }
     }
 
     public IEnumerator GameStart()
     {
         Init();
+        UnityEngine.Object.Destroy(gameStartUI);
 
+        GameObject readyUI = Managers.UI.CreateUI("ReadyUI");
+        
         yield return new WaitUntil(() => CheckAllBallStop());
+        yield return new WaitUntil(() => TurnText.activeSelf);
+
+        UnityEngine.Object.Destroy(readyUI);
 
         isStart = true;
-        gameStartButton = null;
+        gameStartUI = null;
     }
 
     public void EndTurn()
@@ -167,7 +229,7 @@ public class GameManager
 
     public void GetScore()
     {
-        Score += hitCombo++;
+        Score += 10 * hitCombo++;
     }
 
     public void HitYellowBall()
@@ -203,7 +265,7 @@ public class GameManager
     {
         scoreText = null;
         timerText = null;
-        gameStartButton = null;
+        gameStartUI = null;
         balls.Clear();
     }
 }

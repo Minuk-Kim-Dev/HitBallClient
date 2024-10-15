@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RankingExitButton : BaseButton
 {
@@ -16,6 +17,14 @@ public class RankingExitButton : BaseButton
         else if(Managers.Scene.CurrentScene as LoginScene)
         {
             Destroy(transform.parent.gameObject);
+        }
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GetComponent<Button>().onClick.Invoke();
         }
     }
 }

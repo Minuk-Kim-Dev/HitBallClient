@@ -20,6 +20,7 @@ public class BaseScene : MonoBehaviour
 
         Screen.SetResolution(1920, 1080, false);
         Managers.UI.Clear();
+        Managers.Sound.StopBGM();
     }
 
     public virtual void Clear()

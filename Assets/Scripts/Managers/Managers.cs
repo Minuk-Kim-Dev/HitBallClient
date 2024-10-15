@@ -19,6 +19,7 @@ public class Managers : MonoBehaviour
     static SceneManagerEx _scene = new SceneManagerEx();
     static ResourceManager _resource = new ResourceManager();
     static UIManager _ui = new UIManager();
+    static SettingManager _setting = new SettingManager();
 
     public static GameManager Game { get { return _game; } }
     public static NetworkManager Network { get { return _network; } }
@@ -28,6 +29,7 @@ public class Managers : MonoBehaviour
     public static SceneManagerEx Scene { get {  return _scene; } }
     public static ResourceManager Resource { get { return _resource; } }
     public static UIManager UI { get { return _ui; } }
+    public static SettingManager Setting { get { return _setting; } }
 
     void Start()
     {
@@ -55,6 +57,7 @@ public class Managers : MonoBehaviour
 
             _sound.Init();
             _data.Init();
+            _setting.Init();
         }
     }
 

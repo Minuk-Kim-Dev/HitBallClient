@@ -93,27 +93,32 @@ public class SoundManager
             if (audioSource.isPlaying)
                 audioSource.Stop();
 
-            //audioSource.volume = Managers.Setting.BGMVol;
+            audioSource.volume = Managers.Setting.BGMVol;
             audioSource.pitch = pitch;
             audioSource.clip = audioClip;
             audioSource.Play();
         }
         else
         {
-            //audioSource.volume = Managers.Setting.SFXVol;
+            audioSource.volume = Managers.Setting.SFXVol;
             audioSource.pitch = pitch;
             audioSource.PlayOneShot(audioClip);
         }
     }
 
+    public void StopBGM()
+    {
+        _audioSources[(int)Sound.Bgm].Stop();
+    }
+
     public void SetVolume(Sound type)
     {
-        //if (type == Sound.Effect)
-        //    _audioSources[(int)Sound.Effect].volume = Managers.Setting.SFXVol;
-        //else if (type == Sound.Bgm)
-        //    _audioSources[(int)Sound.Bgm].volume = Managers.Setting.BGMVol;
-        //else
-        //    Debug.Log($"There is no type of sound : {type}");
+        if (type == Sound.Effect)
+            _audioSources[(int)Sound.Effect].volume = Managers.Setting.SFXVol;
+        else if (type == Sound.Bgm)
+            _audioSources[(int)Sound.Bgm].volume = Managers.Setting.BGMVol;
+        else
+            Debug.Log($"There is no type of sound : {type}");
     }
 
     AudioClip GetOrAddAudioClip(string path, Sound type = Sound.Effect)

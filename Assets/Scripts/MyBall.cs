@@ -26,6 +26,14 @@ public class MyBall : Ball
     {
         base.Update();
 
+        if (!Managers.Game.isStart)
+        {
+            if (Input.GetKeyDown(KeyCode.T))
+            {
+                Managers.Instance.StartCoroutine(Managers.Game.GameStart());
+            }
+        }
+
         if(Managers.Game.isStart)
         {
             Managers.Game.Timer -= Time.deltaTime;

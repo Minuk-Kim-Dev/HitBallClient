@@ -45,7 +45,7 @@ public class Ball : MonoBehaviour
         switch (targetLayer)
         {
             case "Ball":
-                Managers.Sound.Play("Sounds/ButtonClick");
+                Managers.Sound.Play("Sounds/BallHitSound");
                 break;
             default:
                 return;
