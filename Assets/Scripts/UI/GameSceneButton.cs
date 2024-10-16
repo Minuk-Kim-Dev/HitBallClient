@@ -21,6 +21,7 @@ public class GameSceneButton : BaseButton
             return;
         }
 
+        majorInput.text = majorInput.text.ToUpper();
         Managers.Instance.StartCoroutine(Managers.Network.CoGetGamePlayCount(idInput.text, majorInput.text, nameInput.text, CheckPlayCount));
         Managers.Instance.StartCoroutine(CoStartGame());
     }
