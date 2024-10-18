@@ -30,7 +30,7 @@ public class Managers : MonoBehaviour
     public static UIManager UI { get { return _ui; } }
     public static SettingManager Setting { get { return _setting; } }
 
-    void Start()
+    void Awake()
     {
         Init();
     }

@@ -10,5 +10,6 @@ public class GameScene : BaseScene
         Managers.Game.Init(); 
         SceneType = Scene.Game;
         Application.runInBackground = true;
+        Managers.Sound.StopBGM();
     }
 }
