@@ -8,7 +8,7 @@ using UnityEngine.Networking;
 
 public class NetworkManager
 {
-    private string apiUrl = "http://CGlabHospital.iptime.org:40000/api/scores";
+    private string apiUrl = "http://DDuKi.iptime.org:40000/api/scores";
 
     public IEnumerator CoPostScore(Score newScore)
     {
