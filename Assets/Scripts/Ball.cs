@@ -47,6 +47,18 @@ public class Ball : MonoBehaviour
             case "Ball":
                 Managers.Sound.Play("Sounds/BallHitSound");
                 break;
+            case "Wall":
+                Vector3 incomingVelocity = rb.velocity;
+
+                // 충돌 지점에서의 법선 벡터
+                Vector3 normal = collision.contacts[0].normal;
+
+                // 반사 벡터 계산: 반사 = 입사 - 2 * (입사 · 법선) * 법선
+                Vector3 reflection = Vector3.Reflect(incomingVelocity, normal);
+
+                // 반사 벡터에 0.9배의 감쇠 반발력 적용
+                rb.velocity = reflection * 0.9f;
+                break;
             default:
                 return;
         }

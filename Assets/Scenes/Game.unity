@@ -306,6 +306,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: RedBall
       objectReference: {fileID: 0}
+    - target: {fileID: 8301705583770639248, guid: 109cdd5cb221b3143813d2c27ce03ac9,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -391,6 +396,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RedBall
+      objectReference: {fileID: 0}
+    - target: {fileID: 8301705583770639248, guid: 109cdd5cb221b3143813d2c27ce03ac9,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -660,6 +670,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: YellowBall
+      objectReference: {fileID: 0}
+    - target: {fileID: 2433202343944277025, guid: 3bac96b8499b7ca4d93447bd8efc5915,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6861734298556336719, guid: 3bac96b8499b7ca4d93447bd8efc5915,
         type: 3}
@@ -1188,6 +1203,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: RedBall
       objectReference: {fileID: 0}
+    - target: {fileID: 8301705583770639248, guid: 109cdd5cb221b3143813d2c27ce03ac9,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1211,6 +1231,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: YellowBall
+      objectReference: {fileID: 0}
+    - target: {fileID: 2433202343944277025, guid: 3bac96b8499b7ca4d93447bd8efc5915,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6861734298556336719, guid: 3bac96b8499b7ca4d93447bd8efc5915,
         type: 3}
@@ -1403,6 +1428,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RedBall
+      objectReference: {fileID: 0}
+    - target: {fileID: 8301705583770639248, guid: 109cdd5cb221b3143813d2c27ce03ac9,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1722,6 +1752,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 820195918}
     m_Modifications:
+    - target: {fileID: 1624160324023855436, guid: 57ed5366a45475b44b370a7bb4b62d10,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2395239045362705336, guid: 57ed5366a45475b44b370a7bb4b62d10,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1799,6 +1834,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: YellowBall
+      objectReference: {fileID: 0}
+    - target: {fileID: 2433202343944277025, guid: 3bac96b8499b7ca4d93447bd8efc5915,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6861734298556336719, guid: 3bac96b8499b7ca4d93447bd8efc5915,
         type: 3}
@@ -1917,6 +1957,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RedBall
+      objectReference: {fileID: 0}
+    - target: {fileID: 8301705583770639248, guid: 109cdd5cb221b3143813d2c27ce03ac9,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2054,6 +2099,29 @@ PrefabInstance:
       propertyPath: m_Name
       value: Table
       objectReference: {fileID: 0}
+    - target: {fileID: 701109742858610050, guid: e699fb1680468b14e85d3e77440a6c00,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 842605544589459411, guid: e699fb1680468b14e85d3e77440a6c00,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: 4fbf230f925229b4489e355c306a6468,
+        type: 2}
+    - target: {fileID: 1158446139561814131, guid: e699fb1680468b14e85d3e77440a6c00,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: 4fbf230f925229b4489e355c306a6468,
+        type: 2}
+    - target: {fileID: 2012955023390445461, guid: e699fb1680468b14e85d3e77440a6c00,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: 4fbf230f925229b4489e355c306a6468,
+        type: 2}
     - target: {fileID: 2211529292957271938, guid: e699fb1680468b14e85d3e77440a6c00,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2103,6 +2171,27 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2814312367075027116, guid: e699fb1680468b14e85d3e77440a6c00,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5396217844347523360, guid: e699fb1680468b14e85d3e77440a6c00,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7173047065207810038, guid: e699fb1680468b14e85d3e77440a6c00,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: 4fbf230f925229b4489e355c306a6468,
+        type: 2}
+    - target: {fileID: 7791802881789902082, guid: e699fb1680468b14e85d3e77440a6c00,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
